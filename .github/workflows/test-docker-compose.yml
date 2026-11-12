@@ -12,6 +12,10 @@ jobs:
 
   test-docker-compose:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_PASSWORD: ci-postgres-fake-password
+      SECRET_KEY: ci-secret-key-for-testing
+      FIRST_SUPERUSER_PASSWORD: ci-admin-password
     timeout-minutes: 10
     steps:
       - name: Checkout
