@@ -1,0 +1,19 @@
+
+services:
+  proxy:
+    profiles:
+      - traefik
+
+  adminer:
+    profiles:
+      - adminer
+
+  db:
+    restart: unless-stopped
+
+  backend:
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      FRONTEND_HOST: "http://178.238.237.209:8002"
