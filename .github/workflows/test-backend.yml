@@ -21,6 +21,7 @@ jobs:
       SMTP_HOST: mailpit
       SMTP_USER: ""
       SMTP_PASSWORD: ""
+      DATABASE_URL: postgresql://postgres:ci-postgres-fake-password@localhost:5432/app
     timeout-minutes: 5
     steps:
       - name: Checkout
