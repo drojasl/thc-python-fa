@@ -11,6 +11,16 @@ permissions:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_PASSWORD: ci-postgres-fake-password
+      PROJECT_NAME: Full Stack FastAPI CI
+      SECRET_KEY: ci-secret-key-for-testing
+      FIRST_SUPERUSER: admin@example.com
+      FIRST_SUPERUSER_PASSWORD: ci-admin-password
+      EMAILS_FROM_EMAIL: info@example.com
+      SMTP_HOST: mailpit
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
     timeout-minutes: 5
     steps:
       - name: Checkout
