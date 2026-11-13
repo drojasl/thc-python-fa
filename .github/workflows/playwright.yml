@@ -45,6 +45,17 @@ jobs:
     if: ${{ needs.changes.outputs.changed == 'true' }}
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_PASSWORD: ci-postgres-fake-password
+      PROJECT_NAME: Full Stack FastAPI CI
+      SECRET_KEY: ci-secret-key-for-testing
+      FIRST_SUPERUSER: admin@example.com
+      FIRST_SUPERUSER_PASSWORD: ci-admin-password
+      EMAILS_FROM_EMAIL: info@example.com
+      SMTP_HOST: mailpit
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      DATABASE_URL: postgresql://postgres:ci-postgres-fake-password@localhost:5432/app
     strategy:
       matrix:
         shardIndex: [1, 2, 3, 4]
