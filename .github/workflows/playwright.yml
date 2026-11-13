@@ -78,6 +78,8 @@ jobs:
     - run: docker compose down -v --remove-orphans
     - run: docker compose run --rm backend bash scripts/prestart.sh
     - name: Run Playwright tests
+      env:
+        ROOT_PATH: /some-prefix
       run: docker compose run --rm playwright bunx playwright test --fail-on-flaky-tests --trace=retain-on-failure --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     - run: docker compose down -v --remove-orphans
     - name: Upload blob report to GitHub Actions Artifacts

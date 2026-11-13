@@ -18,6 +18,7 @@ def custom_generate_unique_id(route: APIRoute) -> str:
 if settings.SENTRY_DSN and settings.FASTAPI_ENV != "development":
     sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)
 
+
 def create_app() -> FastAPI:
     application = FastAPI(
         title=settings.PROJECT_NAME,
