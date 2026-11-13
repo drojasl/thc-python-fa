@@ -59,6 +59,12 @@ jobs:
         run: bun ci
       - name: Run prek - pre-commit
         id: precommit
+        env:
+          PROJECT_NAME: Full Stack FastAPI CI
+          SECRET_KEY: ci-secret-key-for-testing
+          FIRST_SUPERUSER: admin@example.com
+          FIRST_SUPERUSER_PASSWORD: ci-admin-password
+          DATABASE_URL: postgresql://postgres:ci-postgres-fake-password@localhost:5432/app
         run: uv run prek run --from-ref origin/${GITHUB_BASE_REF} --to-ref HEAD --show-diff-on-failure
         continue-on-error: true
       - name: Check for changes

@@ -14,7 +14,8 @@ import { Toaster } from "./components/ui/sonner"
 import "./index.css"
 import { routeTree } from "./routeTree.gen"
 
-const appRootPath = new URL(import.meta.url).pathname.match(/^(.*)\/assets\//)?.[1] ?? ""
+const appRootPath =
+  new URL(import.meta.url).pathname.match(/^(.*)\/assets\//)?.[1] ?? ""
 const apiBaseURL = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "")}${appRootPath}`
 
 client.setConfig({
