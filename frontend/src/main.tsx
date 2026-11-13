@@ -14,8 +14,11 @@ import { Toaster } from "./components/ui/sonner"
 import "./index.css"
 import { routeTree } from "./routeTree.gen"
 
+const appRootPath = new URL(import.meta.url).pathname.match(/^(.*)\/assets\//)?.[1] ?? ""
+const apiBaseURL = `${(import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "")}${appRootPath}`
+
 client.setConfig({
-  baseURL: import.meta.env.VITE_API_URL ?? "",
+  baseURL: apiBaseURL,
   auth: () => localStorage.getItem("access_token") || "",
 })
 
@@ -25,7 +28,7 @@ const handleApiError = (error: Error) => {
     [401, 403].includes(error.response?.status ?? 0)
   ) {
     localStorage.removeItem("access_token")
-    window.location.href = "/login"
+    window.location.href = `${appRootPath}/login`
   }
 }
 const queryClient = new QueryClient({
@@ -37,7 +40,7 @@ const queryClient = new QueryClient({
   }),
 })
 
-const router = createRouter({ routeTree })
+const router = createRouter({ routeTree, basepath: appRootPath || "/" })
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router

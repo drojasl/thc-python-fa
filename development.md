@@ -91,6 +91,8 @@ The `compose.deploy.yml` file contains the deployment-specific settings, includi
 
 The backend reads local settings from the `.env` file. Docker Compose also uses it for variable interpolation and passes the settings each container needs.
 
+`ROOT_PATH` optionally sets the application's external URL prefix when a reverse proxy strips that prefix before forwarding requests. It defaults to empty for local development; for example, set `ROOT_PATH=/some-prefix` in a deployment's environment. The backend configures the ASGI root path, while the embedded frontend derives its prefix from its loaded asset URL.
+
 After changing variables, make sure you restart the stack:
 
 ```bash
