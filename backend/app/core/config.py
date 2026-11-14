@@ -20,6 +20,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
     API_V1_STR: str = "/api/v1"
+    ROOT_PATH: str = ""
     SECRET_KEY: str
     # 60 minutes * 24 hours * 8 days = 8 days
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
@@ -64,6 +65,12 @@ class Settings(BaseSettings):
     EMAIL_TEST_USER: EmailStr = "test@example.com"
     FIRST_SUPERUSER: EmailStr
     FIRST_SUPERUSER_PASSWORD: str
+
+    @field_validator("ROOT_PATH", mode="before")
+    @classmethod
+    def _normalize_root_path(cls, value: str) -> str:
+        segments = [segment for segment in value.split("/") if segment]
+        return f"/{'/'.join(segments)}" if segments else ""
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
