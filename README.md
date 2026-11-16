@@ -5,6 +5,7 @@ A reusable full-stack template for building web applications and technical take-
 
 [![Test Docker Compose](../../actions/workflows/test-docker-compose.yml/badge.svg)](../../actions/workflows/test-docker-compose.yml)
 [![Test Backend](../../actions/workflows/test-backend.yml/badge.svg)](../../actions/workflows/test-backend.yml)
+[![Coverage](https://coverage-badge.samuelcolvin.workers.dev/drojasl/thc-python-fa.svg)](https://coverage-badge.samuelcolvin.workers.dev/redirect/drojasl/thc-python-fa)
 
 ## Technology Stack and Features
 
