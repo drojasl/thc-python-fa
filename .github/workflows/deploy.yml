@@ -41,4 +41,4 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             "$VPS_USER@$VPS_HOST" \
-            "sudo /usr/local/bin/deploy-challenge thc-python-fa"
+            "/usr/local/bin/deploy-challenge thc-python-fa"
