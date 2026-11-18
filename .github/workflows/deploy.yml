@@ -1,26 +1,18 @@
 
-name: Deploy to VPS
+name: Deploy
 
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - release-notes.md
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: deploy-thc-python-fa
-  cancel-in-progress: false
-
 jobs:
   deploy:
-    name: Deploy to VPS
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
       - name: Configure SSH
@@ -28,6 +20,9 @@ jobs:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
+          test -n "$VPS_SSH_KEY" || { echo "VPS_SSH_KEY is missing"; exit 1; }
+          test -n "$VPS_HOST" || { echo "VPS_HOST is missing"; exit 1; }
+
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
@@ -38,7 +33,14 @@ jobs:
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          ssh -i ~/.ssh/deploy_key \
+          test -n "$VPS_USER" || { echo "VPS_USER is missing"; exit 1; }
+
+          PROJECT="${GITHUB_REPOSITORY#*/}"
+
+          echo "Deploying project: $PROJECT"
+
+          ssh -i "$HOME/.ssh/deploy_key" \
             "$VPS_USER@$VPS_HOST" \
-            "/usr/local/bin/deploy-challenge thc-python-fa"
+            "/usr/local/bin/deploy-challenge $PROJECT"
